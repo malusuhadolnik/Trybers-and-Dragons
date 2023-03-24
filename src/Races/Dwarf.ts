@@ -11,6 +11,6 @@ export default class Dwarf extends Race {
   }
 
   static createdRacesInstances(): number {
-    return this.dwarfCount
+    return this.dwarfCount;
   }
 }
