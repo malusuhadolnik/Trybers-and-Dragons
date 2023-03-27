@@ -1,10 +1,10 @@
-import Fighter from "./Fighter";
-import Archetype, { Mage } from "./Archetypes";
+import Fighter from './Fighter';
+import Archetype, { Mage } from './Archetypes';
 import Energy from './Energy';
-import getRandomInt from "./utils";
+import getRandomInt from './utils';
 import Race, { Elf } from './Races'; // a importação de elf sem desestruturar acarreta em erro - caccont crate instance of abstract class
 
-export default class Character implements Fighter{
+export default class Character implements Fighter {
   private _race: Race; 
   private _archetype: Archetype;
   private _maxLifePoints: number; 
@@ -15,20 +15,19 @@ export default class Character implements Fighter{
   private _energy: Energy;
   _name: string;
 
-  constructor(name: string){
+  constructor(name: string) {
     this._name = name;
     this._dexterity = getRandomInt(1, 10);
     this._race = new Elf(name, this._dexterity); 
     this._archetype = new Mage(name);
-    this._maxLifePoints = (this._race.maxLifePoints)/2;
+    this._maxLifePoints = (this._race.maxLifePoints) / 2;
     this._lifePoints = this._maxLifePoints;
     this._strength = getRandomInt(1, 10);
     this._defense = getRandomInt(1, 10);
     this._energy = { 
       type_: this._archetype.energyType, // ao usar "this._energy.type_", recebo erro: propriedade 'this' não existe no tipo energy
-      amount: getRandomInt(1, 10)
-    }
-
+      amount: getRandomInt(1, 10),
+    };
   }
 
   public get name():string {
@@ -64,7 +63,7 @@ export default class Character implements Fighter{
   }
 
   public get energy(): Energy {
-    return { ...this._energy }; //energy é um objeto! Para ler as propriedades, fazemos spread
+    return { ...this._energy }; // energy é um objeto! Para ler as propriedades, fazemos spread
   }
 
   public receiveDamage(attackPoints: number):number {
@@ -76,27 +75,27 @@ export default class Character implements Fighter{
     if (damage <= this._lifePoints) {
       this._lifePoints -= 1;
     }
-    if (this._lifePoints <=0) {
-        this._lifePoints = -1;
+    if (this._lifePoints <= 0) {
+      this._lifePoints = -1;
     }
     return this._lifePoints;
   }
 
-  public attack(enemy: Fighter) {
+  public attack() {
     return this._strength;
   }
 
   public levelUp() {
-    this._strength = this._strength + getRandomInt(1, 10);
-    this._dexterity = this._dexterity + getRandomInt(1, 10);
-    this._defense = this._defense + getRandomInt(1, 10);
+    this._strength += getRandomInt(1, 10); // lint: Assignment (=) can be replaced with operator assignment (+=)           
+    this._dexterity += getRandomInt(1, 10);
+    this._defense += getRandomInt(1, 10);
     this._energy.amount = 10;
 
-    let updateMaxLife = this._maxLifePoints + getRandomInt(1, 10);
-    if  (updateMaxLife > this._race.maxLifePoints) {
+    const updateMaxLife = this._maxLifePoints + getRandomInt(1, 10);
+    if (updateMaxLife > this._race.maxLifePoints) {
       this._maxLifePoints = this._race.maxLifePoints;
     } else {
-      this._maxLifePoints= updateMaxLife;  
+      this._maxLifePoints = updateMaxLife;  
     }
 
     this._lifePoints = this._maxLifePoints;
