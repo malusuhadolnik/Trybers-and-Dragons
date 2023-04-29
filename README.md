@@ -1,5 +1,4 @@
-# Projeto 
-Trybers-and-Dragons
+# Projeto Trybers-and-Dragons
 
 # Sobre
 Projeto desenvolvido durante o Módulo 3 - Back-End do curso de Desenvolvimento Web da Trybe.
